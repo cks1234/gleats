@@ -1,0 +1,1302 @@
+{
+    "sections": [
+        {
+            "title": "Visual Inspection",
+            "questions": [
+                {
+                    "id": "1_1",
+                    "question": "Has a visual inspection been completed?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "1_2",
+                        "no": {
+                            "error": "Complete visual inspection to proceed"
+                        }
+                    }
+                },
+                {
+                    "id": "1_2",
+                    "question": "Were any defects found?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": {
+                            "prompt": {
+                                "text": "List of defects and remedial action taken",
+                                "type": "text",
+                                "next": "1_3"
+                            }
+                        },
+                        "no": "1_3"
+                    }
+                },
+                {
+                    "id": "1_3",
+                    "question": "New Installation or an Alteration?",
+                    "type": "select",
+                    "options": ["New Installation", "Alteration"],
+                    "next": {
+                        "New Installation": "2_1",
+                        "Alteration": "6_1"
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Initial Procedures",
+            "questions": [
+                {
+                    "id": "2_1",
+                    "question": "Open all main switches",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "2_2",
+                        "no": {
+                            "error": "Cannot proceed until all main switches are open"
+                        }
+                    }
+                },
+                {
+                    "id": "2_2",
+                    "question": "Turn off all main circuit breakers",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "2_3",
+                        "no": {
+                            "error": "Cannot proceed until all circuit breakers are turned off"
+                        }
+                    }
+                },
+                {
+                    "id": "2_3",
+                    "question": "Remove main earth and main neutral from neutral link",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "2_4",
+                        "no": {
+                            "error": "Cannot proceed until main earth and main neutral are removed from neutral link"
+                        }
+                    }
+                },
+                {
+                    "id": "2_4",
+                    "question": "Disconnected main earth and any disconnected circuit earths that may be earthed by other means, eg hot water system piping",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": {
+                            "prompt": {
+                                "text": "Details eg Hot water system piping",
+                                "type": "text",
+                                "next": "3_1"
+                            }
+                        },
+                        "no": {
+                            "prompt": {
+                                "text": "Details eg N/A",
+                                "type": "text",
+                                "next": "3_1"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Earth Continuity Tests",
+            "questions": [
+                {
+                    "id": "3_1",
+                    "question": "Test between disconnected main earth and earth electrode (in ohms)",
+                    "type": "float",
+                    "validation": {
+                        "min": 0,
+                        "max": 0.5
+                    },
+                    "next": {
+                        "valid": "3_2",
+                        "invalid": {
+                            "error": "Can not proceed earth measurement is below 0.5 ohms"
+                        }
+                    }
+                },
+                {
+                    "id": "3_2",
+                    "question": "Test between disconnected main earth and metallic water pipes (in ohms)",
+                    "type": "float",
+                    "validation": {
+                        "min": 0,
+                        "max": 0.5
+                    },
+                    "next": {
+                        "valid": "3_3",
+                        "invalid": {
+                            "error": "Can not proceed until earth measurement is below 0.5 ohms"
+                        }
+                    }
+                },
+                {
+                    "id": "3_3",
+                    "question": "Test between disconnected main earth and any other disconnected circuit earths that may be earthed by other means eg Hot water system piping (in ohms)",
+                    "type": "yes_no",
+                    "next": {
+                        "no": {
+                            "prompt": {
+                                "text": "Details eg N/A",
+                                "type": "text",
+                                "next": "3_4"
+                            }
+                        },
+                        "yes": {
+                            "prompt": {
+                                "text": "Details eg N/A",
+                                "type": "text",
+                                "next": {
+                                    "prompt": {
+                                        "text": "Record value",
+                                        "type": "float",
+                                        "validation": {
+                                            "min": 0,
+                                            "max": 0.5
+                                        },
+                                        "next": {
+                                            "valid": "3_4",
+                                            "invalid": {
+                                                "error": "Can not proceed until earth measurement is below 0.5 ohms"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "id": "3_4",
+                    "question": "Reconnect Circuit Earthing Conductors",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "3_5",
+                        "no": {
+                            "error": "Can not proceed until all circuit earthing conductors have been reconnected"
+                        }
+                    }
+                },
+                {
+                    "id": "3_5",
+                    "question": "Test between disconnected main earth and exposed metal of appliances and accessories (in ohms) indicate highest reading",
+                    "type": "float",
+                    "nullable": true,
+                    "validation": {
+                        "min": 0,
+                        "max": 0.5
+                    },
+                    "next": {
+                        "valid": "3_6",
+                        "invalid": {
+                            "error": "Can not proceed until earth measurement is below 0.5 ohms"
+                        }
+                    }
+                },
+                {
+                    "id": "3_6",
+                    "question": "Test between disconnected main earth and earth terminal of accessories that are required to be earthed (in ohms) indicate highest reading",
+                    "type": "float",
+                    "nullable": true,
+                    "validation": {
+                        "min": 0,
+                        "max": 0.5
+                    },
+                    "next": {
+                        "valid": "4_1",
+                        "invalid": {
+                            "error": "Can not proceed until earth measurement is below 0.5 ohms"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Insulation Resistance Tests",
+            "questions": [
+                {
+                    "id": "4_1",
+                    "question": "Are service conductors disconnected?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "4_2",
+                        "no": {
+                            "error": "Can not proceed until all service conductors are disconnected"
+                        }
+                    }
+                },
+                {
+                    "id": "4_2",
+                    "question": "Is the service bonding conductor disconnected eg from riser bracket?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "4_3",
+                        "no": {
+                            "error": "Can not proceed until the service bonding conductor is disconnected"
+                        }
+                    }
+                },
+                {
+                    "id": "4_3",
+                    "question": "Is the installation three phase?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "4_6",
+                        "no": "4_4"
+                    }
+                },
+                {
+                    "id": "4_4",
+                    "question": "Test between disconnected main earth and main active with the main switch turned ON (must be over 1M ohm)",
+                    "type": "text",
+                    "next": {
+                        "valid": "4_5",
+                        "invalid": {
+                            "eror": "Can not proceed until insulation resistance measurement is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "4_5",
+                    "question": "Test between disconnected main earth and main neutral (must be over 1M ohm)",
+                    "type": "text",
+                    "next": {
+                        "valid": "4_9",
+                        "invalid": {
+                            "eror": "Can not proceed until insulation resistance measurement is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "4_6",
+                    "question": "Test between disconnected main earth and A phase main active with the main switch turned ON (must be over 1M ohm)",
+                    "type": "text",
+                    "next": {
+                        "valid": "4_7",
+                        "invalid": {
+                            "eror": "Can not proceed until insulation resistance measurement is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "4_7",
+                    "question": "Test between disconnected main earth and B phase main active with the main switch turned ON (must be over 1M ohm)",
+                    "type": "text",
+                    "next": {
+                        "valid": "4_8",
+                        "invalid": {
+                            "eror": "Can not proceed until insulation resistance measurement is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "4_8",
+                    "question": "Test between disconnected main earth and C phase main active with the main switch turned ON (must be over 1M ohm)",
+                    "type": "text",
+                    "next": {
+                        "valid": "4_9",
+                        "invalid": {
+                            "eror": "Can not proceed until insulation resistance measurement is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "4_9",
+                    "question": "Test between disconnected main earth and main neutral (must be over 1M ohm)",
+                    "type": "text",
+                    "next": {
+                        "valid": "4_10",
+                        "invalid": {
+                            "eror": "Can not proceed until insulation resistance measurement is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "4_10",
+                    "question": "For Sub-main circuit?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "4_11",
+                        "no": "4_15"
+                    }
+                },
+                {
+                    "id": "4_11",
+                    "question": "Description about sub-main",
+                    "type": "text",
+                    "next": {
+                        "valid": "4_12",
+                        "invalid": {
+                            "eror": "Can not proceed until description about sub-main is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "4_12",
+                    "question": "Test between disconnected main earth and all sub-main active conductors (must be over 1M ohm)",
+                    "type": "text",
+                    "next": {
+                        "valid": "4_13",
+                        "invalid": {
+                            "eror": "Can not proceed until insulation resistance measurement is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "4_13",
+                    "question": "Test between disconnected main earth and sub-main neutral (must be over 1M ohm)",
+                    "type": "text",
+                    "next": {
+                        "valid": "4_14",
+                        "invalid": {
+                            "eror": "Can not proceed until insulation resistance measurement is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "4_14",
+                    "question": "Another Sub-main circuit?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "4_11",
+                        "no": "4_15"
+                    }
+                },
+                {
+                    "id": "4_15",
+                    "question": "Description about final sub-circuit",
+                    "type": "text",
+                    "next": {
+                        "valid": "4_16",
+                        "invalid": {
+                            "eror": "Can not proceed until description about final sub-circuit is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "4_16",
+                    "question": "Fixed heating elements used in final sub-circuit?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "4_17",
+                        "no": "4_17"
+                    }
+                },
+                {
+                    "id": "4_17",
+                    "question": "Test between disconnected main earth and all sub-circuit active conductors (must be over 1M ohm)",
+                    "type": "text",
+                    "depends_on": "4_16",
+                    "next": {
+                        "valid": "4_18",
+                        "invalid": {
+                            "eror": "Can not proceed until insulation resistance measurement is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "4_18",
+                    "question": "Test between disconnected main earth and sub-circuit neutral (must be over 1M ohm)",
+                    "type": "text",
+                    "depends_on": "4_16",
+                    "next": {
+                        "valid": "4_19",
+                        "invalid": {
+                            "eror": "Can not proceed until insulation resistance measurement is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "4_19",
+                    "question": "Another Final Sub-circuit circuit?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "4_15",
+                        "no": "5_1"
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Polarity Test on Mains (with Supply available)",
+            "questions": [
+                {
+                    "id": "5_1",
+                    "question": "Is the Main Switch and all the circuit breakers turned OFF?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "5_2",
+                        "no": {
+                            "error": "Can not proceed until Main Switch and all circuit breakers are turned OFF"
+                        }
+                    }
+                },
+                {
+                    "id": "5_2",
+                    "question": "Is the main neutral and main earth removed from neutral link?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "5_3",
+                        "no": {
+                            "error": "Can not proceed until the main neutral and main earth are removed from neutral link"
+                        }
+                    }
+                },
+                {
+                    "id": "5_3",
+                    "question": "Is the service bonding conductor disconnected eg to riser bracket?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "5_4",
+                        "no": {
+                            "error": "Can not proceed until the service bonding conductor is disconnected"
+                        }
+                    }
+                },
+                {
+                    "id": "5_4",
+                    "question": "Is the installation three phase?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "5_12",
+                        "no": "5_5"
+                    }
+                },
+                {
+                    "id": "5_5",
+                    "question": "Is independent earth connection available?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "5_6",
+                        "no": {
+                            "error": "Can not proceed until independent earth is available"
+                        }
+                    }
+                },
+                {
+                    "id": "5_6",
+                    "question": "Test between independent earth connection and line terminal of main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "5_7",
+                        "invalid": {
+                            "error": "Can not proceed check independent earth connection and that supply is connected"
+                        }
+                    }
+                },
+                {
+                    "id": "5_7",
+                    "question": "Test between independent earth connection and disconnected main neutral)",
+                    "type": "int",
+                    "validation": {
+                        "min": 0,
+                        "max": 0
+                    },
+                    "next": {
+                        "valid": "5_8",
+                        "invalid": {
+                            "error": "Can not proceed check supply connections at Point of Entry eg Mains Box"
+                        }
+                    }
+                },
+                {
+                    "id": "5_8",
+                    "question": "Test between disconnected main neutral and line terminal of main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "5_9",
+                        "invalid": {
+                            "error": "Can not proceed check supply connections at Point of Entry eg Mains Box"
+                        }
+                    }
+                },
+                {
+                    "id": "5_9",
+                    "question": "Test between disconnected main neutral and disconnected main earth)",
+                    "type": "int",
+                    "validation": {
+                        "min": 0,
+                        "max": 0
+                    },
+                    "next": {
+                        "valid": "5_10",
+                        "invalid": {
+                            "error": "Can not proceed check supply connections at Point of Entry eg Mains Box"
+                        }
+                    }
+                },
+                {
+                    "id": "5_10",
+                    "question": "Test between disconnected main earth and line terminal of main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "5_11",
+                        "invalid": {
+                            "error": "Can not proceed check supply connections at Point of Entry eg Mains Box"
+                        }
+                    }
+                },
+                {
+                    "id": "5_11",
+                    "question": "Reconnect Main Earth and Main Neutral in Main Neutral Link",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "5_26",
+                        "no": {
+                            "error": "Can not proceed until main earth and main neutral have been reconnected to main neutral link"
+                        }
+                    }
+                },
+                {
+                    "id": "5_12",
+                    "question": "Is independent earth connection available?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "5_13",
+                        "no": {
+                            "error": "Can not proceed until independent earth is available"
+                        }
+                    }
+                },
+                {
+                    "id": "5_13",
+                    "question": "Test between independent earth connection and line terminal of A phase on main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "5_14",
+                        "invalid": {
+                            "error": "Can not proceed check independent earth connection and that supply is connected"
+                        }
+                    }
+                },
+                {
+                    "id": "5_14",
+                    "question": "Test between independent earth connection and line terminal of B phase on main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "5_15",
+                        "invalid": {
+                            "error": "Can not proceed check independent earth connection and that supply is connected"
+                        }
+                    }
+                },
+                {
+                    "id": "5_15",
+                    "question": "Test between independent earth connection and line terminal of C phase on main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "5_16",
+                        "invalid": {
+                            "error": "Can not proceed check independent earth connection and that supply is connected"
+                        }
+                    }
+                },
+                {
+                    "id": "5_16",
+                    "question": "Test between independent earth connection and disconnected main neutral)",
+                    "type": "int",
+                    "validation": {
+                        "min": 0,
+                        "max": 0
+                    },
+                    "next": {
+                        "valid": "5_10",
+                        "invalid": {
+                            "error": "Can not proceed check supply connections at Point of Entry eg Mains Box"
+                        }
+                    }
+                },
+                {
+                    "id": "5_17",
+                    "question": "Test between disconnected main neutral and line terminal A phase of main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "5_18",
+                        "invalid": {
+                            "error": "Can not proceed check supply connections at Point of Entry eg Mains Box"
+                        }
+                    }
+                },
+                {
+                    "id": "5_18",
+                    "question": "Test between disconnected main neutral and line terminal B phase of main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "5_19",
+                        "invalid": {
+                            "error": "Can not proceed check supply connections at Point of Entry eg Mains Box"
+                        }
+                    }
+                },
+                {
+                    "id": "5_19",
+                    "question": "Test between disconnected main neutral and line terminal C phase of main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "5_20",
+                        "invalid": {
+                            "error": "Can not proceed check supply connections at Point of Entry eg Mains Box"
+                        }
+                    }
+                },
+                {
+                    "id": "5_20",
+                    "question": "Test between line terminal A phase and line terminal B phase of main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 390,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "5_21",
+                        "invalid": {
+                            "error": "Can not proceed check supply connections at Point of Entry eg Mains Box"
+                        }
+                    }
+                },
+                {
+                    "id": "5_21",
+                    "question": "Test between line terminal B phase and line terminal C phase of main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 390,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "5_22",
+                        "invalid": {
+                            "error": "Can not proceed check supply connections at Point of Entry eg Mains Box"
+                        }
+                    }
+                },
+                {
+                    "id": "5_22",
+                    "question": "Test between line terminal A phase and line terminal C phase of main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 390,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "5_23",
+                        "invalid": {
+                            "error": "Can not proceed check supply connections at Point of Entry eg Mains Box"
+                        }
+                    }
+                },
+                {
+                    "id": "5_23",
+                    "question": "Test between disconnected main neutral and disconnected main earth)",
+                    "type": "int",
+                    "validation": {
+                        "min": 0,
+                        "max": 0
+                    },
+                    "next": {
+                        "valid": "5_24",
+                        "invalid": {
+                            "error": "Can not proceed check supply connections at Point of Entry eg Mains Box"
+                        }
+                    }
+                },
+                {
+                    "id": "5_24",
+                    "question": "Test between disconnected main earth and line terminal A phase of main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "5_25",
+                        "invalid": {
+                            "error": "Can not proceed check supply connections at Point of Entry eg Mains Box"
+                        }
+                    }
+                },
+                {
+                    "id": "5_25",
+                    "question": "Reconnect Main Earth and Main Neutral in Main Neutral Link",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "5_26",
+                        "no": {
+                            "error": "Can not proceed until main earth and main neutral have been reconnected to main neutral link"
+                        }
+                    }
+                },
+                {
+                    "id": "5_26",
+                    "question": "Is service bonding conductor required at Point of Entry eg riser bracket?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "5_31",
+                        "no": "5_27"
+                    }
+                },
+                {
+                    "id": "5_27",
+                    "question": "Is independent earth connection available at Point of Entry?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "5_28",
+                        "no": {
+                            "error": "Can not proceed until independent earth is available at Point of Entry"
+                        }
+                    }
+                },
+                {
+                    "id": "5_28",
+                    "question": "Test between independent earth and service bonding conductor)",
+                    "type": "int",
+                    "validation": {
+                        "min": 0,
+                        "max": 0
+                    },
+                    "next": {
+                        "valid": "5_29",
+                        "invalid": {
+                            "error": "Can not proceed check supply connections at Point of Entry eg Mains Box"
+                        }
+                    }
+                },
+                {
+                    "id": "5_29",
+                    "question": "Reconnect service bonding conductor to riser bracket",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "5_30",
+                        "no": {
+                            "error": "Can not proceed until main earth and main neutral have been reconnected to main neutral link"
+                        }
+                    }
+                },
+                {
+                    "id": "5_30",
+                    "question": "Test for indication at service bonding conductor and riser bracket using proximity tester)",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "5_31",
+                        "no": {
+                            "error": "Service bonding conductor and riser bracket appear to be energised – Check supply connections"
+                        }
+                    }
+                },
+                {
+                    "id": "5_31",
+                    "question": "Test for indication at main earth electrode using proximity tester)",
+                    "type": "yes_no",
+                    "next": {
+                        "no": "6_1",
+                        "yes": {
+                            "error": "Main earthing conductor appears to be energised – Check supply connections"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Alterations to existing installation",
+            "questions": [
+                {
+                    "id": "6_1",
+                    "question": "Is there a MEN connection at the Main Switchboard?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "6_2",
+                        "no": {
+                            "error": "Check and resolve MEN connection to proceed"
+                        }
+                    }
+                },
+                {
+                    "id": "6_2",
+                    "question": "Is the main earth connection to the earth electrode in good condition?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "6_3",
+                        "no": {
+                            "error": "Check and resolve main earth connection to electrode to proceed"
+                        }
+                    }
+                },
+                {
+                    "id": "6_3",
+                    "question": "Description about item or circuit being tested",
+                    "type": "text",
+                    "next": {
+                        "valid": "6_4",
+                        "invalid": {
+                            "eror": "Can not proceed until description about item or circuit being tested is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "6_4",
+                    "question": "Test between earthing bar in switchboard and earthed exposed metal and/or earth terminal of accessories that are required to be earthed (in ohms) indicate highest reading for the item or circuit being tested",
+                    "type": "text",
+                    "next": {
+                        "valid": "6_5",
+                        "invalid": {
+                            "eror": "Can not proceed until value is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "6_5",
+                    "question": "Testing Another item or circuit?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "6_3",
+                        "no": "6_6"
+                    }
+                },
+                {
+                    "id": "6_6",
+                    "question": "Is the item and/or circuit include fixed heating elements?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "6_7",
+                        "no": "6_7"
+                    }
+                },
+                {
+                    "id": "6_7",
+                    "question": "Test between the item earth and active/neutral conductors or for a circuit between the earthing bar and the circuit active and neutral conductors (must be over 1M ohm)",
+                    "type": "text",
+                    "depends_on": "6_6",
+                    "next": {
+                        "valid": "6_8",
+                        "invalid": {
+                            "eror": "Can not proceed until insulation resistance measurement is entered"
+                        }
+                    }
+                },
+                {
+                    "id": "6_8",
+                    "question": "Test polarity of item and/or all circuit outlets, is the polarity correct?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "6_9",
+                        "no": {
+                            "error": "Can not proceed until incorrect polarity is resolved"
+                        }
+                    }
+                },
+                {
+                    "id": "6_9",
+                    "question": "Test RCD/Safety switch button of circuit, did it function correctly?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "6_10",
+                        "no": {
+                            "error": "Can not proceed until safety switch is working correctly"
+                        }
+                    }
+                },
+                {
+                    "id": "6_10",
+                    "question": "Test RCD/Safety switch of circuit, using RCD Tester, did it function correctly?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "6_11",
+                        "no": {
+                            "error": "Can not proceed until safety switch is working correctly"
+                        }
+                    }
+                },
+                {
+                    "id": "6_11",
+                    "question": "Are there any other items and/or circuits identified in previous steps",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "6_7",
+                        "no": "7_1"
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Polarity of Sub-main circuits and Final Sub-circuits",
+            "questions": [
+                {
+                    "id": "7_1",
+                    "question": "For Sub-main circuit?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "7_2",
+                        "no": "7_20"
+                    }
+                },
+                {
+                    "id": "7_1",
+                    "question": "Select Sub-main circuit identified in Section 4",
+                    "type": "dropdown",
+                    "depends_on": "4_11",
+                    "next": {
+                        "valid": "7_3",
+                        "invalid": {
+                            "error": "Response must be from given options"
+                        }
+                    }
+                },
+                {
+                    "id": "7_3",
+                    "question": "Has visual inspection, earth testing and insulation testing been completed for Sub-main circuit?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "7_4",
+                        "no": {
+                            "error": "Can not proceed until visual inspection, earth testing and insulation testing has been completed – refer to Section 1"
+                        }
+                    }
+                },
+                {
+                    "id": "7_4",
+                    "question": "Is the Sub-main circuit three phase?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "7_9",
+                        "no": "7_5"
+                    }
+                },
+                {
+                    "id": "7_5",
+                    "question": "Test between disconnected sub-main neutral and line terminal of sub- main switch or circuit breaker)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "7_6",
+                        "invalid": {
+                            "error": "Can not proceed check sub-main is connected and energised at origin switchboard"
+                        }
+                    }
+                },
+                {
+                    "id": "7_6",
+                    "question": "Test between disconnected sub-main neutral and sub-main earth)",
+                    "type": "int",
+                    "validation": {
+                        "min": 0,
+                        "max": 0
+                    },
+                    "next": {
+                        "valid": "7_7",
+                        "invalid": {
+                            "error": "Can not proceed check sub-main connections at origin switchboard"
+                        }
+                    }
+                },
+                {
+                    "id": "7_7",
+                    "question": "Test between disconnected sub-main earth and line terminal of sub-main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "7_8",
+                        "invalid": {
+                            "error": "Can not proceed check sub-main connections at origin switchboard"
+                        }
+                    }
+                },
+                {
+                    "id": "7_8",
+                    "question": "Connect Sub-main Neutral to Sub-main Neutral Link",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "7_19",
+                        "no": {
+                            "error": "Can not proceed until visual inspection, earth testing and insulation testing has been completed – refer to Section 1"
+                        }
+                    }
+                },
+                {
+                    "id": "7_9",
+                    "question": "Test between disconnected sub-main neutral and line terminal A phase of sub-main switch or circuit breaker)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "7_10",
+                        "invalid": {
+                            "error": "Can not proceed check sub-main is connected and energised at origin switchboard"
+                        }
+                    }
+                },
+                {
+                    "id": "7_10",
+                    "question": "Test between disconnected sub-main neutral and line terminal B phase of sub-main switch or circuit breaker)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "7_11",
+                        "invalid": {
+                            "error": "Can not proceed check sub-main is connected and energised at origin switchboard"
+                        }
+                    }
+                },
+                {
+                    "id": "7_11",
+                    "question": "Test between disconnected sub-main neutral and line terminal C phase of sub-main switch or circuit breaker)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "7_12",
+                        "invalid": {
+                            "error": "Can not proceed check sub-main is connected and energised at origin switchboard"
+                        }
+                    }
+                },
+                {
+                    "id": "7_12",
+                    "question": "Test between line terminal A phase and line terminal B phase of sub- main switch or circuit breaker)",
+                    "type": "int",
+                    "validation": {
+                        "min": 390,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "7_13",
+                        "invalid": {
+                            "error": "Can not proceed check sub-main connections at origin switchboard"
+                        }
+                    }
+                },
+                {
+                    "id": "7_13",
+                    "question": "Test between line terminal B phase and line terminal C phase of sub- main switch or circuit breaker)",
+                    "type": "int",
+                    "validation": {
+                        "min": 390,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "7_14",
+                        "invalid": {
+                            "error": "Can not proceed check sub-main connections at origin switchboard"
+                        }
+                    }
+                },
+                {
+                    "id": "7_14",
+                    "question": "Test between line terminal C phase and line terminal A phase of sub- main switch or circuit breaker)",
+                    "type": "int",
+                    "validation": {
+                        "min": 390,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "7_15",
+                        "invalid": {
+                            "error": "Can not proceed check sub-main connections at origin switchboard"
+                        }
+                    }
+                },
+                {
+                    "id": "7_15",
+                    "question": "Test between disconnected sub-main neutral and sub-main earth)",
+                    "type": "int",
+                    "validation": {
+                        "min": 0,
+                        "max": 0
+                    },
+                    "next": {
+                        "valid": "7_16",
+                        "invalid": {
+                            "error": "Can not proceed check sub-main connections at origin switchboard"
+                        }
+                    }
+                },
+                {
+                    "id": "7_16",
+                    "question": "Test between sub-main earth and line terminal A phase of main switch)",
+                    "type": "int",
+                    "validation": {
+                        "min": 220,
+                        "max": 10000
+                    },
+                    "next": {
+                        "valid": "7_17",
+                        "invalid": {
+                            "error": "Can not proceed check sub-main connections at origin switchboard"
+                        }
+                    }
+                },
+                {
+                    "id": "7_17",
+                    "question": "Connect Sub-main Neutral to Sub-main Neutral Link",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "7_18",
+                        "no": {
+                            "error": "Can not proceed until sub-main neutral has been connected to main neutral link"
+                        }
+                    }
+                },
+                {
+                    "id": "7_18",
+                    "question": "Are there any other sub-main circuits identified in section 4",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "7_1",
+                        "no": "7_19"
+                    }
+                },
+                {
+                    "id": "7_19",
+                    "question": "For Final sub-circuit?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "7_20",
+                        "no": "8_1"
+                    }
+                },
+                {
+                    "id": "7_20",
+                    "question": "Select Final sub-circuit identified in Section 4",
+                    "type": "dropdown",
+                    "depends_on": "4_15",
+                    "next": {
+                        "valid": "7_21",
+                        "invalid": {
+                            "error": "Response must be from given options"
+                        }
+                    }
+                },
+                {
+                    "id": "7_21",
+                    "question": "Has visual inspection, earth testing and insulation testing been completed for Sub-main circuit?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "7_22",
+                        "no": {
+                            "error": "Can not proceed until visual inspection, earth testing and insulation testing has been completed – refer to Section 1"
+                        }
+                    }
+                },
+                {
+                    "id": "7_22",
+                    "question": "Test polarity of all circuit outlets, is the polarity correct?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "7_23",
+                        "no": {
+                            "error": "Can not proceed until incorrect polarity is resolved"
+                        }
+                    }
+                },
+                {
+                    "id": "7_23",
+                    "question": "Test RCD/Safety switch button of circuit, did it function correctly?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "7_24",
+                        "no": {
+                            "error": "Can not proceed until safety switch is working correctly"
+                        }
+                    }
+                },
+                {
+                    "id": "7_24",
+                    "question": "Test RCD/Safety switch of circuit, using RCD Tester, did it function correctly?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": {
+                            "prompt": {
+                                "text": "Trip Time",
+                                "type": "text",
+                                "next": "7_25"
+                            }
+                        },
+                        "no": {
+                            "error": "Can not proceed until safety switch is working correctly"
+                        }
+                    }
+                },
+                {
+                    "id": "7_25",
+                    "question": "Are there any other final sub-circuits identified in section 4",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": "7_20",
+                        "no": "8_1"
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Record and submit electrical test report for review",
+            "questions": [
+                {
+                    "id": "8_1",
+                    "question": "Is the testing complete?",
+                    "type": "yes_no",
+                    "next": {
+                        "yes": {
+                            "prompt": {
+                                "type": "action",
+                                "name": "save"
+                            }
+                        },
+                        "no": {
+                            "error": "Review and update sections as required"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
